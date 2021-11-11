@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Express handlebars</title>
+    <script src="js/main.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="identification">
+        <div>
+            <a class="registration">Регистрация</a>
+        </div>
+        <div>
+            <a class="sign-in">Войти</a>
+        </div>
+    </div>
+    <nav class="navigation">
+        <ul class="navigation-list">
+            <li class="navigation-item">
+                <a class="img" href="#">
+                    <img src="img/rock-climber.jpg" alt="Скалолаз" width="100%" height="100%">
+                </a>
+            </li>
+            <li class="navigation-item">
+                <a class="navigation-link current main" href="#main">Главная</a>
+            </li>
+            <li class="navigation-item">
+                <a class="navigation-link users" href="#users">Участники</a>
+            </li>
+            <li class="navigation-item">
+                <a class="navigation-link faq" href="#faq">FAQ</a>
+            </li>
+            <li class="navigation-item">
+                <a class="navigation-link shoping" href="#shoping">Магазин</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<div class="body">{{{body}}}</div>
+
+<div class="footer">
+    <div class="logo-list">
+        <img src="img/fasebook.png" alt="fasebook" class="logo fb">
+        <img src="img/instagram.png" alt="instagram" class=" logo inst">
+        <img src="img/telegram.png" alt="telegram" class="logo tl">
+        <img src="img/vk.png" alt="vk" class="logo vk">
+
+    </div>
+</div>
+
+</body>
+</html>
+
