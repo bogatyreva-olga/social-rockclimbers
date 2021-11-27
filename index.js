@@ -5,7 +5,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 
-const chatMessagesFileName = 'chat-messages.data';
+const feedbackMessagesFileName = 'feedback-messages.data';
 
 const app = express();
 
@@ -16,7 +16,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
-    layoutsDir: path.join(__dirname, 'views/layouts')
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    helpers: require('./config/handlebars-helpers'),
 }));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -50,33 +51,73 @@ app.post('/registration', (request, response) => {
     response.json({message: "success registration"});
 });
 
-function getChatMessages() {
-    let fileData = fs.readFileSync(chatMessagesFileName);
+function getFeedbackMessages() {
     let data = [];
+    if (!fs.existsSync(feedbackMessagesFileName)) {
+        return data;
+    }
+    let fileData = fs.readFileSync(feedbackMessagesFileName);
     if (fileData) {
         data = JSON.parse(fileData);
     }
     return data;
 }
 
-app.get('/chat', (request, response) => {
-    response.render('chat', {
-        chatMessages: getChatMessages(),
+function getNowTimestamp() {
+    let ts = (new Date().getTime());
+    return Math.round(ts / 1000);
+}
+
+function getFeedbackCategories() {
+    return [
+        {
+            id: 1,
+            name: "Магазин",
+        },
+        {
+            id: 2,
+            name: "Сайт",
+        },
+        {
+            id: 3,
+            name: "Рассписание",
+        },
+    ];
+}
+
+app.get('/feedback', (request, response) => {
+    response.render('feedback', {
+        feedbackMessages: getFeedbackMessages(),
+        categories: getFeedbackCategories(),
     });
 });
 
-app.post('/chat/messages', (request, response) => {
+app.post('/feedback/messages', (request, response) => {
     console.log(request.body);
-    let data = getChatMessages();
-    data.push(request.body);
-    fs.writeFileSync(chatMessagesFileName, JSON.stringify(data), () => {
+    let data = getFeedbackMessages();
+    let newFeedbackMessage = {
+        nameUser: request.body.nameUser,
+        feedbackMessage: request.body.feedbackMessage,
+        categoryId: request.body.categoryId,
+        createdAt: getNowTimestamp(),
+    };
+    data.push(newFeedbackMessage);
+
+    fs.writeFileSync(feedbackMessagesFileName, JSON.stringify(data), () => {
     });
-    response.json({message: "success save"});
+
+    response.json(newFeedbackMessage);
 });
 
-app.get('/chat/messages', (request, response) => {
+app.get('/feedback/messages', (request, response) => {
     response.json({
-        chatMessages: getChatMessages(),
+        feedbackMessages: getFeedbackMessages(),
+    });
+});
+
+app.get('/feedback/categories', (request, response) => {
+    response.json({
+        categories: getFeedbackCategories(),
     });
 });
 

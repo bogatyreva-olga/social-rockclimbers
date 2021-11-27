@@ -94,16 +94,23 @@ body {
     height: 20px;
 }
 
-.chat {
+.feedback {
     display: grid;
     justify-content: center;
     margin-top: 80px;
 }
 
-.chat div {
+.feedback div {
     padding: 20px;
 }
 
-.chat form input {
+.feedback form input {
     height: 20px;
 }
+
+.category {
+    width: 150px;
+    height: 30px;
+    margin-left: 20px;;
+}
+
