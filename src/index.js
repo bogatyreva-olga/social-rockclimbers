@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const FeedbackMessage = require('./models/feedback-message');
 
 const feedbackMessagesFileName = 'feedback-messages.data';
 
@@ -17,13 +18,13 @@ app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
     layoutsDir: path.join(__dirname, 'views/layouts'),
-    helpers: require('./config/handlebars-helpers'),
+    helpers: require('./helpers/handlebars-helpers'),
 }));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Express Middleware for serving static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
 app.get('/', (request, response) => {
@@ -47,11 +48,10 @@ app.get('/registration', (request, response) => {
 });
 
 app.post('/registration', (request, response) => {
-    console.log(request.body);
     response.json({message: "success registration"});
 });
 
-function getFeedbackMessages() {
+function getFeedbackMessagesByCategoryId(categoryId) {
     let data = [];
     if (!fs.existsSync(feedbackMessagesFileName)) {
         return data;
@@ -60,12 +60,12 @@ function getFeedbackMessages() {
     if (fileData) {
         data = JSON.parse(fileData);
     }
+    if (categoryId > 0) {
+        return data.filter(function (elem) {
+            return elem.categoryId === categoryId;
+        });
+    }
     return data;
-}
-
-function getNowTimestamp() {
-    let ts = (new Date().getTime());
-    return Math.round(ts / 1000);
 }
 
 function getFeedbackCategories() {
@@ -87,20 +87,15 @@ function getFeedbackCategories() {
 
 app.get('/feedback', (request, response) => {
     response.render('feedback', {
-        feedbackMessages: getFeedbackMessages(),
+        feedbackMessages: getFeedbackMessagesByCategoryId(),
         categories: getFeedbackCategories(),
     });
 });
 
 app.post('/feedback/messages', (request, response) => {
     console.log(request.body);
-    let data = getFeedbackMessages();
-    let newFeedbackMessage = {
-        nameUser: request.body.nameUser,
-        feedbackMessage: request.body.feedbackMessage,
-        categoryId: request.body.categoryId,
-        createdAt: getNowTimestamp(),
-    };
+    let data = getFeedbackMessagesByCategoryId();
+    let newFeedbackMessage = new FeedbackMessage(request.body.userName, request.body.message, request.body.categoryId);
     data.push(newFeedbackMessage);
 
     fs.writeFileSync(feedbackMessagesFileName, JSON.stringify(data), () => {
@@ -111,7 +106,7 @@ app.post('/feedback/messages', (request, response) => {
 
 app.get('/feedback/messages', (request, response) => {
     response.json({
-        feedbackMessages: getFeedbackMessages(),
+        feedbackMessages: getFeedbackMessagesByCategoryId(request.query.categoryId),
     });
 });
 

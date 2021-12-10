@@ -48,8 +48,8 @@ function getCategoryId() {
 
 function sendFeedbackMessage() {
     let data = {
-        feedbackMessage: getFeedbackMessageValue(),
-        nameUser: getNameUserValue(),
+        message: getFeedbackMessageValue(),
+        userName: getNameUserValue(),
         categoryId: getCategoryId(),
     };
 
@@ -63,11 +63,11 @@ function sendFeedbackMessage() {
     })
         .then(response => response.json())
         .then(function (response) {
-            console.log(response);
-            const feedbackMessagesElement = document.getElementById('feedback-messages');
-            let feedbackMessageElement = document.createElement("div");
-            feedbackMessageElement.innerText = getTextDataFromFeedbackMessage(response);
-            feedbackMessagesElement.appendChild(feedbackMessageElement);
+            const filterElement = document.getElementById("category-filter");
+            console.log(response.categoryId);
+            filterElement.value = response.categoryId;
+            updateFeedbackMessagesWithCategoryFilter();
+
             document.getElementById("name-user").value = "";
             document.getElementById('feedback-message').value = "";
         });
@@ -76,11 +76,13 @@ function sendFeedbackMessage() {
 }
 
 function getTextDataFromFeedbackMessage(feedbackMessage) {
-    return feedbackMessage.nameUser + " - " + feedbackMessage.feedbackMessage + " - " + dateFormat(feedbackMessage.createdAt) + " - " + getCategoryNameById(feedbackMessage.categoryId);
+    return feedbackMessage.userName + " - " + feedbackMessage.message + " - " + dateFormat(feedbackMessage.createdAt) + " - " + getCategoryNameById(feedbackMessage.categoryId);
 }
 
-function refreshFeedbackMessages() {
-    fetch("/feedback/messages", {
+function updateFeedbackMessagesWithCategoryFilter() {
+    let categoryId = document.getElementById("category-filter").value;
+    console.log(categoryId);
+    fetch("/feedback/messages?categoryId=" + categoryId, {
         method: "GET",
     })
         .then(res => res.json())
@@ -128,7 +130,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const sendFeedbackMessageButton = document.getElementById('send-feedback-message');
     if (sendFeedbackMessageButton) {
         sendFeedbackMessageButton.addEventListener('click', sendFeedbackMessage);
-        setInterval(refreshFeedbackMessages, 15000);
+        setInterval(updateFeedbackMessagesWithCategoryFilter, 15000);
         updateFeedbackCategories();
+    }
+
+    const filterCategorySelect = document.getElementById("category-filter");
+    if (filterCategorySelect) {
+        filterCategorySelect.addEventListener('change', updateFeedbackMessagesWithCategoryFilter);
     }
 });
