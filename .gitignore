@@ -1,3 +1,4 @@
 .idea
 node_modules
-feedback-messages.data
+data/feedback-messages.data
+data/users.data

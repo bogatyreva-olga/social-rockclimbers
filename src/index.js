@@ -6,7 +6,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const FeedbackMessage = require('./models/feedback-message');
 
-const feedbackMessagesFileName = 'feedback-messages.data';
+const feedbackMessagesFileName = 'data/feedback-messages.data';
 
 const app = express();
 
