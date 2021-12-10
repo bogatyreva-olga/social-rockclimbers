@@ -1,0 +1,41 @@
+<div class="feedback">
+    <div class="category-feedback-filter">
+        <div>
+            <label for="category-filter">Фильтр</label>
+            <select name="category-filter" class="category-filter" id="category-filter">
+                <option value="0">Все</option>
+                >
+                {{#each categories}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    <div id="feedback-messages">
+        {{#each feedbackMessages}}
+            <div>{{this.userName}} - {{this.message}} - {{{dateFormat this.createdAt}}} - {{getCategoryNameById
+                    this.categoryId ..categories}}</div>
+        {{/each}}
+    </div>
+    <div>
+        <label>
+            <input id="name-user" class="name-user" placeholder="Input name">
+        </label>
+    </div>
+    <div>
+        <label>
+            <input id="feedback-message" name="feedback-message" placeholder="Input message"/>
+        </label>
+    </div>
+    <div>
+        <label for="category">Категория</label>
+        <select name="category" class="category" id="category">
+            {{#each categories}}
+                <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div>
+        <button id="send-feedback-message">Send message</button>
+    </div>
+</div>

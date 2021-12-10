@@ -19,25 +19,41 @@ function sendRegistrationForm() {
             console.log(res);
             const respMessage = document.getElementById('response-message');
             respMessage.innerText = res.message;
-        })
-        .catch(function (res) {
-            console.log(res);
-            const respMessage = document.getElementById('response-message');
-            respMessage.innerText = res.message;
         });
     return undefined;
 }
 
-function getChatMessageValue() {
-    return document.getElementById('chat-message').value;
+function getFeedbackMessageValue() {
+    return document.getElementById('feedback-message').value;
 }
 
-function sendChatMessage() {
+function getNameUserValue() {
+    return document.getElementById("name-user").value;
+}
+
+function dateFormat(timestamp) {
+    let date = new Date(timestamp * 1000);
+    console.log(date);
+    let year = date.getFullYear();
+    let month = "0" + (date.getMonth() + 1);
+    let day = "0" + date.getDate();
+    let hours = date.getHours();
+    let minutes = "0" + date.getMinutes();
+    return year + "-" + month.substr(-2) + "-" + day.substr(-2) + " " + hours + ':' + minutes.substr(-2);
+}
+
+function getCategoryId() {
+    return document.getElementById("category").value;
+}
+
+function sendFeedbackMessage() {
     let data = {
-        chatMessage: getChatMessageValue(),
+        message: getFeedbackMessageValue(),
+        userName: getNameUserValue(),
+        categoryId: getCategoryId(),
     };
 
-    fetch("/chat/messages", {
+    fetch("/feedback/messages", {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -47,35 +63,62 @@ function sendChatMessage() {
     })
         .then(response => response.json())
         .then(function (response) {
-            console.log(response);
-            const chatMessagesElement = document.getElementById('chat-messages');
-            let chatMessageElement = document.createElement("div");
-            chatMessageElement.innerText = getChatMessageValue();
-            chatMessagesElement.appendChild(chatMessageElement);
+            const filterElement = document.getElementById("category-filter");
+            console.log(response.categoryId);
+            filterElement.value = response.categoryId;
+            updateFeedbackMessagesWithCategoryFilter();
+
+            document.getElementById("name-user").value = "";
+            document.getElementById('feedback-message').value = "";
         });
 
     return undefined;
 }
 
-function refreshChatMessages() {
-    fetch("/chat/messages", {
+function getTextDataFromFeedbackMessage(feedbackMessage) {
+    return feedbackMessage.userName + " - " + feedbackMessage.message + " - " + dateFormat(feedbackMessage.createdAt) + " - " + getCategoryNameById(feedbackMessage.categoryId);
+}
+
+function updateFeedbackMessagesWithCategoryFilter() {
+    let categoryId = document.getElementById("category-filter").value;
+    console.log(categoryId);
+    fetch("/feedback/messages?categoryId=" + categoryId, {
         method: "GET",
     })
         .then(res => res.json())
         .then(function (response) {
-            let chatMessagesData = response.chatMessages;
+            let feedbackMessagesData = response.feedbackMessages;
 
-            const chatMessagesElement = document.getElementById('chat-messages');
-            chatMessagesElement.innerHTML = '';
+            const feedbackMessagesElement = document.getElementById('feedback-messages');
+            feedbackMessagesElement.innerHTML = '';
 
-            for (let i = 0; i < chatMessagesData.length; i++) {
-                let chatMessageElement = document.createElement("div");
-                chatMessageElement.innerText = chatMessagesData[i].chatMessage;
-                chatMessagesElement.appendChild(chatMessageElement);
+            for (let i = 0; i < feedbackMessagesData.length; i++) {
+                let feedbackMessageElement = document.createElement("div");
+                feedbackMessageElement.innerText = getTextDataFromFeedbackMessage(feedbackMessagesData[i]);
+                feedbackMessagesElement.appendChild(feedbackMessageElement);
             }
         });
 
     return undefined;
+}
+
+feedbackCategories = [];
+
+function updateFeedbackCategories() {
+    fetch("/feedback/categories", {
+        method: "GET",
+    })
+        .then(res => res.json())
+        .then(function (response) {
+            feedbackCategories = response.categories;
+        });
+}
+
+function getCategoryNameById(categoryId) {
+    let data = feedbackCategories.filter(function (category) {
+        return category.id === parseInt(categoryId);
+    });
+    return data[0].name;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -84,9 +127,15 @@ document.addEventListener('DOMContentLoaded', function () {
         submitRegistrationButton.addEventListener('click', sendRegistrationForm);
     }
 
-    const sendChatMessageButton = document.getElementById('send-chat-message');
-    if (sendChatMessageButton) {
-        sendChatMessageButton.addEventListener('click', sendChatMessage);
-        setInterval(refreshChatMessages, 5000);
+    const sendFeedbackMessageButton = document.getElementById('send-feedback-message');
+    if (sendFeedbackMessageButton) {
+        sendFeedbackMessageButton.addEventListener('click', sendFeedbackMessage);
+        setInterval(updateFeedbackMessagesWithCategoryFilter, 15000);
+        updateFeedbackCategories();
+    }
+
+    const filterCategorySelect = document.getElementById("category-filter");
+    if (filterCategorySelect) {
+        filterCategorySelect.addEventListener('change', updateFeedbackMessagesWithCategoryFilter);
     }
 });
