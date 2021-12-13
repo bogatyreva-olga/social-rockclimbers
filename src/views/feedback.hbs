@@ -4,7 +4,6 @@
             <label for="category-filter">Фильтр</label>
             <select name="category-filter" class="category-filter" id="category-filter">
                 <option value="0">Все</option>
-                >
                 {{#each categories}}
                     <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
@@ -13,8 +12,7 @@
     </div>
     <div id="feedback-messages">
         {{#each feedbackMessages}}
-            <div>{{this.userName}} - {{this.message}} - {{{dateFormat this.createdAt}}} - {{getCategoryNameById
-                    this.categoryId ..categories}}</div>
+            <div>{{this.userName}} - {{this.message}} - {{{dateFormat this.createdAt}}} - {{getCategoryNameById this.categoryId ..categories}}</div>
         {{/each}}
     </div>
     <div>

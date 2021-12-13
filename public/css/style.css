@@ -86,7 +86,7 @@ body {
     margin-top: 80px;
 }
 
-.registration div {
+.registration-form-element {
     padding: 20px;
 }
 
@@ -114,3 +114,14 @@ body {
     margin-left: 20px;;
 }
 
+.registration-input:valid {
+    border-color: #7cc22d;
+}
+
+.registration-input:invalid {
+    border-color: #cc1536;
+}
+
+.message-js {
+    display: none;
+}

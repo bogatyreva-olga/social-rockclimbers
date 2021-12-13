@@ -1,10 +1,22 @@
 function sendRegistrationForm() {
+    const form = document.getElementById("registration-form");
+    if (!form.checkValidity()) {
+        const message = document.getElementById('message');
+        message.innerText = "Invalid form";
+        message.style.display = "block";
+        return;
+    }
+
     const email = document.getElementById('email');
     const pass = document.getElementById('password');
     let data = {
         email: email.value,
         password: pass.value
     };
+    let messageElements = document.querySelectorAll(".message-js");
+    for (let i = 0; i < messageElements.length; i++) {
+        messageElements[i].innerText = "";
+    }
 
     fetch("/registration", {
         method: "POST",
@@ -16,9 +28,18 @@ function sendRegistrationForm() {
     })
         .then(res => res.json())
         .then(function (res) {
-            console.log(res);
-            const respMessage = document.getElementById('response-message');
+            if (!res.success) {
+                for (let i = 0; i < res.errors.length; i++) {
+                    let error = res.errors[i];
+                    let errorMsgElement = document.getElementById("error-" + error.param + "-js");
+                    errorMsgElement.innerText = error.msg;
+                    errorMsgElement.style.display = "block";
+                }
+                return;
+            }
+            const respMessage = document.getElementById('message');
             respMessage.innerText = res.message;
+            respMessage.style.display = "block";
         });
     return undefined;
 }
