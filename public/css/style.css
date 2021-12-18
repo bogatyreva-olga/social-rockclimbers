@@ -76,23 +76,29 @@ body {
     height: 50px;
 }
 
-.logo-list {
-
-}
-
-.registration {
+.sign-form {
     display: grid;
     justify-content: center;
     margin-top: 80px;
 }
 
-.registration-form-element {
+.sign-form-element {
     padding: 20px;
 }
 
-.registration form input {
-    height: 20px;
+.sign-form-element button, .sign-form-element input {
+    width: 200px;
+    height: 30px;
 }
+
+.sign-form-element input:valid {
+    border-color: #7cc22d;
+}
+
+.sign-form-element input:invalid {
+    border-color: #cc1536;
+}
+
 
 .feedback {
     display: grid;
@@ -112,14 +118,6 @@ body {
     width: 150px;
     height: 30px;
     margin-left: 20px;;
-}
-
-.registration-input:valid {
-    border-color: #7cc22d;
-}
-
-.registration-input:invalid {
-    border-color: #cc1536;
 }
 
 .message-js {

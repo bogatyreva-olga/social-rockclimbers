@@ -9,8 +9,8 @@ const bodyParser = require('body-parser');
 const FeedbackMessage = require('./models/feedback-message');
 const User = require('./models/user');
 
-const feedbackMessagesFileName = 'data/feedback-messages.data';
-const usersFileName = 'data/users.data';
+const feedbackMessagesFileName = path.join(__dirname, '../data/feedback-messages.data');
+const usersFileName = path.join(__dirname, '../data/users.data');
 
 const app = express();
 
@@ -47,12 +47,16 @@ app.get('/users', (request, response) => {
     });
 });
 
-app.get('/registration', (request, response) => {
-    response.render('registration');
+app.get('/sign-in', (request, response) => {
+    response.render('sign-in');
+});
+
+app.get('/sign-up', (request, response) => {
+    response.render('sign-up');
 });
 
 const minPasswordLength = 6;
-app.post('/registration',
+app.post('/sign-up',
     body('email').isEmail().withMessage("Invalid email").normalizeEmail(),
     body('password').isLength({min: minPasswordLength}).withMessage("Invalid min length: " + minPasswordLength + " symbols"),
     (request, response) => {
@@ -87,11 +91,10 @@ app.post('/registration',
 
         response.status(200).json({
             success: true,
-            message: 'User registration successful',
+            message: 'User sign-up successful',
         });
 
     });
-
 
 app.get('/feedback', (request, response) => {
     response.render('feedback', {

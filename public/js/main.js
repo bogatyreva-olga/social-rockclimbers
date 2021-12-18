@@ -1,5 +1,5 @@
-function sendRegistrationForm() {
-    const form = document.getElementById("registration-form");
+function sendSignUpForm() {
+    const form = document.getElementById("sign-up-form");
     if (!form.checkValidity()) {
         const message = document.getElementById('message');
         message.innerText = "Invalid form";
@@ -18,7 +18,7 @@ function sendRegistrationForm() {
         messageElements[i].innerText = "";
     }
 
-    fetch("/registration", {
+    fetch("/sign-up", {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -143,9 +143,9 @@ function getCategoryNameById(categoryId) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const submitRegistrationButton = document.getElementById('submit-registration');
-    if (submitRegistrationButton) {
-        submitRegistrationButton.addEventListener('click', sendRegistrationForm);
+    const submitSignUpButton = document.getElementById('submit-sign-up');
+    if (submitSignUpButton) {
+        submitSignUpButton.addEventListener('click', sendSignUpForm);
     }
 
     const sendFeedbackMessageButton = document.getElementById('send-feedback-message');
