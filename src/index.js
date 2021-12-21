@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 
 const FeedbackMessage = require('./models/feedback-message');
 const User = require('./models/user');
+const md5 = require("md5");
 
 const feedbackMessagesFileName = path.join(__dirname, '../data/feedback-messages.data');
 const usersFileName = path.join(__dirname, '../data/users.data');
