@@ -44,6 +44,52 @@ function sendSignUpForm() {
     return undefined;
 }
 
+function sendSignInForm() {
+    const form = document.getElementById("sign-in-form");
+    if (!form.checkValidity()) {
+        const message = document.getElementById('message');
+        message.innerText = "Invalid form";
+        message.style.display = "block";
+        return;
+    }
+
+    const email = document.getElementById('email');
+    const pass = document.getElementById('password');
+    let data = {
+        email: email.value,
+        password: pass.value
+    };
+    let messageElements = document.querySelectorAll(".message-js");
+    for (let i = 0; i < messageElements.length; i++) {
+        messageElements[i].innerText = "";
+    }
+
+    fetch("/sign-in", {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(res => res.json())
+        .then(function (res) {
+            if (!res.success) {
+                for (let i = 0; i < res.errors.length; i++) {
+                    let error = res.errors[i];
+                    let errorMsgElement = document.getElementById("error-" + error.param + "-js");
+                    errorMsgElement.innerText = error.msg;
+                    errorMsgElement.style.display = "block";
+                }
+                return;
+            }
+            const respMessage = document.getElementById('message');
+            respMessage.innerText = res.message;
+            respMessage.style.display = "block";
+        });
+    return undefined;
+}
+
 function getFeedbackMessageValue() {
     return document.getElementById('feedback-message').value;
 }
@@ -146,6 +192,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitSignUpButton = document.getElementById('submit-sign-up');
     if (submitSignUpButton) {
         submitSignUpButton.addEventListener('click', sendSignUpForm);
+    }
+    const submitSignInButton = document.getElementById('submit-sign-in');
+    if (submitSignInButton) {
+        submitSignInButton.addEventListener('click', sendSignInForm);
     }
 
     const sendFeedbackMessageButton = document.getElementById('send-feedback-message');
