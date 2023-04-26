@@ -1,4 +1,5 @@
 // index.js
+console.log("start server")
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -169,5 +170,5 @@ function getFeedbackCategories() {
         },
     ];
 }
-
+console.log("go to http://localhost:3001")
 app.listen(3001);

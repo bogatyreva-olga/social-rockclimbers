@@ -27,14 +27,6 @@ body {
     color: azure;
 }
 
-.header {
-    /*display: flex;*/
-    width: 100%;
-    height: 200px;
-    align-items: center;
-    background-color: #393939;
-}
-
 .identification {
     color: azure;
 }
@@ -64,7 +56,6 @@ body {
     display: flex;
     justify-content: space-between;
     list-style-type: none;
-
 }
 
 .img {
@@ -76,52 +67,9 @@ body {
     height: 50px;
 }
 
-.logo-list {
-
-}
-
-.registration {
-    display: grid;
-    justify-content: center;
-    margin-top: 80px;
-}
-
-.registration-form-element {
-    padding: 20px;
-}
-
-.registration form input {
-    height: 20px;
-}
-
-.feedback {
-    display: grid;
-    justify-content: center;
-    margin-top: 80px;
-}
-
-.feedback div {
-    padding: 20px;
-}
-
-.feedback form input {
-    height: 20px;
-}
-
 .category {
     width: 150px;
     height: 30px;
     margin-left: 20px;;
 }
 
-.registration-input:valid {
-    border-color: #7cc22d;
-}
-
-.registration-input:invalid {
-    border-color: #cc1536;
-}
-
-.message-js {
-    display: none;
-}

@@ -37,9 +37,7 @@ function sendRegistrationForm() {
                 }
                 return;
             }
-            const respMessage = document.getElementById('message');
-            respMessage.innerText = res.message;
-            respMessage.style.display = "block";
+            showModal("Registration successfully", res.message);
         });
     return undefined;
 }
@@ -102,7 +100,6 @@ function getTextDataFromFeedbackMessage(feedbackMessage) {
 
 function updateFeedbackMessagesWithCategoryFilter() {
     let categoryId = document.getElementById("category-filter").value;
-    console.log(categoryId);
     fetch("/feedback/messages?categoryId=" + categoryId, {
         method: "GET",
     })
@@ -142,7 +139,17 @@ function getCategoryNameById(categoryId) {
     return data[0].name;
 }
 
+function showModal(title, content) {
+    let modalElement = document.getElementById("exampleModal");
+    modalElement.querySelector("#modal-title").innerHTML = title;
+    modalElement.querySelector("#modal-body").innerHTML = content;
+    let myModal = new bootstrap.Modal(modalElement, {});
+
+    myModal.show();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+
     const submitRegistrationButton = document.getElementById('submit-registration');
     if (submitRegistrationButton) {
         submitRegistrationButton.addEventListener('click', sendRegistrationForm);
