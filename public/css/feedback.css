@@ -1,0 +1,29 @@
+#feedback-messages {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    height: 300px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-item {
+    border: 1px solid #cefffc;
+    margin-bottom: 10px;
+    width: 80%;
+    height: 300px;
+    border-radius: 10px;
+
+}
+ .container {
+     flex-direction: column;
+ }
+
+ .feedback {
+     display: flex;
+ }
+
+ .btn-message {
+   margin: auto;
+ }
