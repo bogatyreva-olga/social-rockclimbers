@@ -113,6 +113,7 @@ function updateFeedbackMessagesWithCategoryFilter() {
             for (let i = 0; i < feedbackMessagesData.length; i++) {
                 let feedbackMessageElement = document.createElement("div");
                 feedbackMessageElement.innerText = getTextDataFromFeedbackMessage(feedbackMessagesData[i]);
+                feedbackMessageElement.classList.add("message-item");
                 feedbackMessagesElement.appendChild(feedbackMessageElement);
             }
         });

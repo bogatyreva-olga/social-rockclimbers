@@ -1,39 +1,36 @@
 <div class="feedback">
+    <div class="container col-md-4 d-flex">
     <div class="category-feedback-filter">
-        <div>
-            <label for="category-filter">Фильтр</label>
-            <select name="category-filter" class="category-filter" id="category-filter">
-                <option value="0">Все</option>
-                {{#each categories}}
+            <div class="feedback mb-5 mt-5">
+                <label for="category-filter">Фильтр по категории</label>
+                <select class="form-select" aria-label="Пример выбора по умолчанию" id="category-filter">
+                    <option value="0" selected>Все</option>
+                    {{#each categories}}
                     <option value="{{this.id}}">{{this.name}}</option>
-                {{/each}}
-            </select>
-        </div>
+                    {{/each}}
+                </select>
+            </div>
     </div>
-    <div id="feedback-messages">
+    <div id="feedback-messages" class="message-items mb-5">
         {{#each feedbackMessages}}
-            <div>{{this.userName}} - {{this.message}} - {{{dateFormat this.createdAt}}} - {{getCategoryNameById this.categoryId ..categories}}</div>
+        <div style="display: flex">{{this.message}} - {{getCategoryNameById
+            this.categoryId ..categories}}
+        </div>
+        <div class="name">{{this.userName}}</div>
+        <div class="data">{{{dateFormat this.createdAt}}}</div>
         {{/each}}
     </div>
-    <div>
-        <label>
-            <input id="name-user" class="name-user" placeholder="Input name">
-        </label>
+        <div class="input-group mb-3">
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="name-user" placeholder="Ваше имя">
     </div>
-    <div>
-        <label>
-            <input id="feedback-message" name="feedback-message" placeholder="Input message"/>
-        </label>
+    <div class="input-group mb-3">
+        <textarea class="form-control" aria-label="With textarea" id="feedback-message" placeholder="Введите текст сообщения"></textarea>
     </div>
-    <div>
-        <label for="category">Категория</label>
-        <select name="category" class="category" id="category">
-            {{#each categories}}
-                <option value="{{this.id}}">{{this.name}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div>
-        <button id="send-feedback-message">Send message</button>
-    </div>
+    <select class="form-select mb-3" aria-label="Default select example" id="category">
+        {{#each categories}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <button type="button" class="btn btn-secondary col-3 btn-message" id="send-feedback-message">Send message</button>
+</div>
 </div>

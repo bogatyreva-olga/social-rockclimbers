@@ -8,7 +8,7 @@
 
 .modal-wrapper {
     align-items:center;
-    background:rgba(0,0,0,.7);
+    background:rgba(0,0,0,.2);
     animation: fade-in 250ms ease-in-out;
 }
 
