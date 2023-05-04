@@ -1,0 +1,107 @@
+.home {
+    font-family: "Times New Roman", sans-serif;
+    background: url("../img/climber-man.jpg") center center no-repeat;
+    background-size: cover;
+    margin-bottom: 100px;
+}
+
+.home-content {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 8vw 2rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .home-content {
+        max-width: 60%;
+    }
+}
+
+    .home-title h1 {
+    font-size: 3.5rem;
+}
+
+.home-subtitle p {
+    font-size: 1.5rem;
+}
+
+.button-link {
+    border-radius: inherit;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.home-components-item {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    max-width: 328px;
+    max-height: 328px;
+    position: relative;
+}
+
+.home-components-wrapper {
+    max-width: 1500px;
+    margin-bottom: 200px;
+}
+
+.home-components-title {
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    text-align: center;
+}
+
+.home-components-img img {
+    width: 100%;
+    max-width: 328px;
+    transition: transform 2s;
+}
+
+.home-component-link:hover div img {
+    opacity: 0.8;
+}
+
+.home-components-img {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hover-image-scale {
+    display: inline-block;
+    overflow: hidden; /* Скрываем всё за контуром */
+    background: #000;
+}
+
+.hover-image-scale img:hover {
+    transform: scale(1.2); /* Увеличиваем масштаб */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.home-components-list {
+    display: grid;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 768px) {
+    .home-components-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+    }
+
+    .list-group-item {
+        width: 100%;
+        height: 100%;
+    }
+}

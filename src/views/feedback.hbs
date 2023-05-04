@@ -12,13 +12,6 @@
             </div>
     </div>
     <div id="feedback-messages" class="message-items mb-5">
-        {{#each feedbackMessages}}
-        <div style="display: flex">{{this.message}} - {{getCategoryNameById
-            this.categoryId ..categories}}
-        </div>
-        <div class="name">{{this.userName}}</div>
-        <div class="data">{{{dateFormat this.createdAt}}}</div>
-        {{/each}}
     </div>
         <div class="input-group mb-3">
         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="name-user" placeholder="Ваше имя">

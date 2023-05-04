@@ -52,7 +52,6 @@ function getNameUserValue() {
 
 function dateFormat(timestamp) {
     let date = new Date(timestamp * 1000);
-    console.log(date);
     let year = date.getFullYear();
     let month = "0" + (date.getMonth() + 1);
     let day = "0" + date.getDate();
@@ -94,8 +93,26 @@ function sendFeedbackMessage() {
     return undefined;
 }
 
-function getTextDataFromFeedbackMessage(feedbackMessage) {
-    return feedbackMessage.userName + " - " + feedbackMessage.message + " - " + dateFormat(feedbackMessage.createdAt) + " - " + getCategoryNameById(feedbackMessage.categoryId);
+function getNodeFromFeedbackMessage(feedbackMessage) {
+    let feedbackMessageElement = document.createElement("div");
+    feedbackMessageElement.classList.add("message-item");
+
+    let dateElement = document.createElement("div");
+    dateElement.innerText = dateFormat(feedbackMessage.createdAt);
+    dateElement.classList.add("date-message");
+    feedbackMessageElement.appendChild(dateElement);
+
+    let userMessageElement = document.createElement("div");
+    userMessageElement.innerText = feedbackMessage.message;
+    userMessageElement.classList.add("user-message");
+    feedbackMessageElement.appendChild(userMessageElement);
+
+    let userNameElement = document.createElement("div");
+    userNameElement.innerText = feedbackMessage.userName;
+    userNameElement.classList.add("user-name");
+    feedbackMessageElement.appendChild(userNameElement);
+
+    return feedbackMessageElement;
 }
 
 function updateFeedbackMessagesWithCategoryFilter() {
@@ -103,7 +120,7 @@ function updateFeedbackMessagesWithCategoryFilter() {
     fetch("/feedback/messages?categoryId=" + categoryId, {
         method: "GET",
     })
-        .then(res => res.json())
+        .then(function (res) {  return res.json()})
         .then(function (response) {
             let feedbackMessagesData = response.feedbackMessages;
 
@@ -111,9 +128,7 @@ function updateFeedbackMessagesWithCategoryFilter() {
             feedbackMessagesElement.innerHTML = '';
 
             for (let i = 0; i < feedbackMessagesData.length; i++) {
-                let feedbackMessageElement = document.createElement("div");
-                feedbackMessageElement.innerText = getTextDataFromFeedbackMessage(feedbackMessagesData[i]);
-                feedbackMessageElement.classList.add("message-item");
+                let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
                 feedbackMessagesElement.appendChild(feedbackMessageElement);
             }
         });
@@ -161,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sendFeedbackMessageButton.addEventListener('click', sendFeedbackMessage);
         setInterval(updateFeedbackMessagesWithCategoryFilter, 15000);
         updateFeedbackCategories();
+        updateFeedbackMessagesWithCategoryFilter();
     }
 
     const filterCategorySelect = document.getElementById("category-filter");

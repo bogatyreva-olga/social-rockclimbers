@@ -9,13 +9,30 @@
 }
 
 .message-item {
-    border: 1px solid #cefffc;
-    margin-bottom: 10px;
+    border: 1px solid #b4dce1;
+    margin-bottom: 20px;
     width: 80%;
-    height: 300px;
-    border-radius: 10px;
-
+    height: fit-content;
+    border-radius: 20px;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
+
+.date-message {
+    margin: 0 auto 5px;
+    font-size: 12px;
+    color: darkgray;
+}
+
+.user-name {
+    font-size: 14px;
+    color: #197986;
+    margin-right: 5px;
+    text-align: end;
+}
+
  .container {
      flex-direction: column;
  }
@@ -26,4 +43,10 @@
 
  .btn-message {
    margin: auto;
+ }
+
+ .user-message {
+     min-width: 0;
+     word-wrap: break-word;
+     display: flex;
  }

@@ -93,7 +93,6 @@ app.post('/registration',
 
     });
 
-
 app.get('/feedback', (request, response) => {
     response.render('feedback', {
         feedbackMessages: getFeedbackMessagesByCategoryId(),
