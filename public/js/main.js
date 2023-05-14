@@ -103,8 +103,11 @@ function getNodeFromFeedbackMessage(feedbackMessage) {
     feedbackMessageElement.appendChild(dateElement);
 
     let userMessageElement = document.createElement("div");
-    userMessageElement.innerText = feedbackMessage.message;
     userMessageElement.classList.add("user-message");
+    let paragraphMessageElement = document.createElement("p");
+    paragraphMessageElement.classList.add("text-break");
+    paragraphMessageElement.innerText = feedbackMessage.message;
+    userMessageElement.appendChild(paragraphMessageElement);
     feedbackMessageElement.appendChild(userMessageElement);
 
     let userNameElement = document.createElement("div");
@@ -117,22 +120,22 @@ function getNodeFromFeedbackMessage(feedbackMessage) {
 
 function updateFeedbackMessagesWithCategoryFilter() {
     let categoryId = document.getElementById("category-filter").value;
-    fetch("/feedback/messages?categoryId=" + categoryId, {
-        method: "GET",
-    })
-        .then(function (res) {  return res.json()})
-        .then(function (response) {
-            let feedbackMessagesData = response.feedbackMessages;
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/feedback/messages?categoryId=" + categoryId, true)
+    xhr.responseType = "json";
+    xhr.onload = function () {
+        let response = xhr.response;
+        let feedbackMessagesData = response.feedbackMessages;
 
-            const feedbackMessagesElement = document.getElementById('feedback-messages');
-            feedbackMessagesElement.innerHTML = '';
+        const feedbackMessagesElement = document.getElementById('feedback-messages');
+        feedbackMessagesElement.innerHTML = '';
 
-            for (let i = 0; i < feedbackMessagesData.length; i++) {
-                let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
-                feedbackMessagesElement.appendChild(feedbackMessageElement);
-            }
-        });
-
+        for (let i = 0; i < feedbackMessagesData.length; i++) {
+            let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
+            feedbackMessagesElement.appendChild(feedbackMessageElement);
+        }
+    }
+    xhr.send();
     return undefined;
 }
 
