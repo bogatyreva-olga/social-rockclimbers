@@ -167,7 +167,7 @@ function showModal(title, content) {
     myModal.show();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready( function () {
 
     const submitRegistrationButton = document.getElementById('submit-registration');
     if (submitRegistrationButton) {
