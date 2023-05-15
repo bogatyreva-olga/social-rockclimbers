@@ -61,7 +61,7 @@ function dateFormat(timestamp) {
 }
 
 function getCategoryId() {
-    return document.getElementById("category").value;
+    return $(document)("#category").val();
 }
 
 function sendFeedbackMessage() {
@@ -167,7 +167,7 @@ function showModal(title, content) {
     myModal.show();
 }
 
-$(document).ready( function () {
+$(document).ready(function () {
 
     const submitRegistrationButton = document.getElementById('submit-registration');
     if (submitRegistrationButton) {
