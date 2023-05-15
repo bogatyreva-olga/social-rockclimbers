@@ -61,7 +61,7 @@ function dateFormat(timestamp) {
 }
 
 function getCategoryId() {
-    return $(document)("#category").val();
+    return document.getElementById("category").value;
 }
 
 function sendFeedbackMessage() {
@@ -174,9 +174,9 @@ $(document).ready(function () {
         submitRegistrationButton.addEventListener('click', sendRegistrationForm);
     }
 
-    const sendFeedbackMessageButton = document.getElementById('send-feedback-message');
+    const sendFeedbackMessageButton = $('#send-feedback-message');
     if (sendFeedbackMessageButton) {
-        sendFeedbackMessageButton.addEventListener('click', sendFeedbackMessage);
+        $(sendFeedbackMessageButton).click(sendFeedbackMessage);
         setInterval(updateFeedbackMessagesWithCategoryFilter, 15000);
         updateFeedbackCategories();
         updateFeedbackMessagesWithCategoryFilter();
