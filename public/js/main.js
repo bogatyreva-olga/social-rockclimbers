@@ -169,12 +169,13 @@ function showModal(title, content) {
 
 $(document).ready(function () {
 
-    const submitRegistrationButton = document.getElementById('submit-registration');
+    const submitRegistrationButton = $('#submit-registration');
     if (submitRegistrationButton) {
-        submitRegistrationButton.addEventListener('click', sendRegistrationForm);
+        $(submitRegistrationButton).click(sendRegistrationForm);
     }
 
     const sendFeedbackMessageButton = $('#send-feedback-message');
+
     if (sendFeedbackMessageButton) {
         $(sendFeedbackMessageButton).click(sendFeedbackMessage);
         setInterval(updateFeedbackMessagesWithCategoryFilter, 15000);
@@ -182,8 +183,8 @@ $(document).ready(function () {
         updateFeedbackMessagesWithCategoryFilter();
     }
 
-    const filterCategorySelect = document.getElementById("category-filter");
+    const filterCategorySelect = $("#category-filter");
     if (filterCategorySelect) {
-        filterCategorySelect.addEventListener('change', updateFeedbackMessagesWithCategoryFilter);
+        $(filterCategorySelect).change(updateFeedbackMessagesWithCategoryFilter);
     }
 });
