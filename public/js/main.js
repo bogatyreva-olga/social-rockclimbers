@@ -32,15 +32,15 @@ function sendRegistrationForm() {
             if (!res.success) {
                 for (let i = 0; i < res.errors.length; i++) {
                     let error = res.errors[i];
-                    let errorMsgElement = $("error-" + error.param + "-js");
+                    let errorMsgElement = $("#error-" + error.param + "-js");
                     errorMsgElement.text(error.msg);
                     errorMsgElement.show();
                 }
                 return;
             }
             showModal("Registration successfully", res.message);
-            $('#email').text('');
-            $('#password').text('');
+            $('#email').val('');
+            $('#password').val('');
         });
     return undefined;
 }
@@ -161,9 +161,9 @@ function getCategoryNameById(categoryId) {
 }
 
 function showModal(title, content) {
-    let modalElement = document.getElementById("exampleModal");
-    modalElement.querySelector("#modal-title").html(title);
-    modalElement.querySelector("#modal-body").html(content);
+    let modalElement = $("#exampleModal");
+    modalElement.find("#modal-title").html(title);
+    modalElement.find("#modal-body").html(content);
     let myModal = new bootstrap.Modal(modalElement, {});
 
     myModal.show();
