@@ -99,7 +99,7 @@ function getNodeFromFeedbackMessage(feedbackMessage) {
     let feedbackMessageElement = $('<div/>', {
         class: 'message-item'
     });
-    let dateElement = $('<div/>' , {
+    let dateElement = $('<div/>', {
         text: dateFormat(feedbackMessage.createdAt),
         class: 'date-message'
     });
@@ -115,9 +115,10 @@ function getNodeFromFeedbackMessage(feedbackMessage) {
     userMessageElement.append(paragraphMessageElement);
     feedbackMessageElement.append(userMessageElement);
 
-    let userNameElement = document.createElement("div");
-    userNameElement.innerText = feedbackMessage.userName;
-    userNameElement.classList.add("user-name");
+    let userNameElement = $('<div/>', {
+        text: feedbackMessage.userName,
+        class: 'user-name'
+    });
     feedbackMessageElement.append(userNameElement);
 
     return feedbackMessageElement;
