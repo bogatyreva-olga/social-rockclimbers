@@ -19,29 +19,31 @@ function sendRegistrationForm() {
         $(elem).text('');
     })
 
-    fetch("/registration", {
-        method: "POST",
+    $.ajax({
+        url: '/registration',
+        type: 'post',
+        data: JSON.stringify(data),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
-    })
-        .then(res => res.json())
-        .then(function (res) {
-            if (!res.success) {
-                for (let i = 0; i < res.errors.length; i++) {
-                    let error = res.errors[i];
-                    let errorMsgElement = $("#error-" + error.param + "-js");
-                    errorMsgElement.text(error.msg);
-                    errorMsgElement.show();
-                }
-                return;
-            }
-            showModal("Registration successfully", res.message);
+        dataType: 'json',
+        success: function (data) {
+            showModal("Registration successfully", data.message);
             $('#email').val('');
             $('#password').val('');
-        });
+        },
+        error: function (data) {
+            let res = data.responseJSON;
+            for (let i = 0; i < res.errors.length; i++) {
+                let error = res.errors[i];
+                let errorMsgElement = $("#error-" + error.param + "-js");
+                errorMsgElement.text(error.msg);
+                errorMsgElement.show();
+            }
+        }
+    });
+
     return undefined;
 }
 
@@ -148,7 +150,7 @@ function updateFeedbackMessagesWithCategoryFilter() {
 let feedbackCategories = [];
 
 function updateFeedbackCategories() {
-    $.get("/feedback/categories", function( response ) {
+    $.get("/feedback/categories", function (response) {
         feedbackCategories = response.categories;
     })
 }
