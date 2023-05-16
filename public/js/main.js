@@ -13,10 +13,11 @@ function sendRegistrationForm() {
         email: email.val(),
         password: pass.val()
     };
-    let messageElements = document.querySelectorAll(".message-js");
-    for (let i = 0; i < messageElements.length; i++) {
-        messageElements[i].text('');
-    }
+
+    let messageElements = $(".message-js");
+    $(messageElements).each(function (i, elem) {
+        $(elem).text('');
+    })
 
     fetch("/registration", {
         method: "POST",
@@ -31,9 +32,9 @@ function sendRegistrationForm() {
             if (!res.success) {
                 for (let i = 0; i < res.errors.length; i++) {
                     let error = res.errors[i];
-                    let errorMsgElement = document.getElementById("error-" + error.param + "-js");
-                    errorMsgElement.innerText = error.msg;
-                    errorMsgElement.style.display = "block";
+                    let errorMsgElement = $("error-" + error.param + "-js");
+                    errorMsgElement.text(error.msg);
+                    errorMsgElement.show();
                 }
                 return;
             }
