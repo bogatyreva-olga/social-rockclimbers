@@ -46,11 +46,11 @@ function sendRegistrationForm() {
 }
 
 function getFeedbackMessageValue() {
-    return document.getElementById('feedback-message').value;
+    return $('#feedback-message').val();
 }
 
 function getNameUserValue() {
-    return document.getElementById("name-user").value;
+    return $('#name-user').val();
 }
 
 function dateFormat(timestamp) {
@@ -64,7 +64,7 @@ function dateFormat(timestamp) {
 }
 
 function getCategoryId() {
-    return document.getElementById("category").value;
+    return $("#category").val();
 }
 
 function sendFeedbackMessage() {
@@ -84,39 +84,41 @@ function sendFeedbackMessage() {
     })
         .then(response => response.json())
         .then(function (response) {
-            const filterElement = document.getElementById("category-filter");
-            console.log(response.categoryId);
+            const filterElement = $("#category-filter");
             filterElement.value = response.categoryId;
             updateFeedbackMessagesWithCategoryFilter();
 
-            document.getElementById("name-user").value = "";
-            document.getElementById('feedback-message').value = "";
+            $("#name-user").val('');
+            $('#feedback-message').val('');
         });
 
     return undefined;
 }
 
 function getNodeFromFeedbackMessage(feedbackMessage) {
-    let feedbackMessageElement = document.createElement("div");
-    feedbackMessageElement.classList.add("message-item");
+    let feedbackMessageElement = $('<div/>', {
+        class: 'message-item'
+    });
+    let dateElement = $('<div/>' , {
+        text: dateFormat(feedbackMessage.createdAt),
+        class: 'date-message'
+    });
+    $(feedbackMessageElement).append(dateElement);
 
-    let dateElement = document.createElement("div");
-    dateElement.innerText = dateFormat(feedbackMessage.createdAt);
-    dateElement.classList.add("date-message");
-    feedbackMessageElement.appendChild(dateElement);
-
-    let userMessageElement = document.createElement("div");
-    userMessageElement.classList.add("user-message");
-    let paragraphMessageElement = document.createElement("p");
-    paragraphMessageElement.classList.add("text-break");
-    paragraphMessageElement.innerText = feedbackMessage.message;
-    userMessageElement.appendChild(paragraphMessageElement);
-    feedbackMessageElement.appendChild(userMessageElement);
+    let userMessageElement = $('<div/>', {
+        class: 'user-message'
+    });
+    let paragraphMessageElement = $('<p/>', {
+        class: 'text-break',
+        text: feedbackMessage.message
+    });
+    userMessageElement.append(paragraphMessageElement);
+    feedbackMessageElement.append(userMessageElement);
 
     let userNameElement = document.createElement("div");
     userNameElement.innerText = feedbackMessage.userName;
     userNameElement.classList.add("user-name");
-    feedbackMessageElement.appendChild(userNameElement);
+    feedbackMessageElement.append(userNameElement);
 
     return feedbackMessageElement;
 }
