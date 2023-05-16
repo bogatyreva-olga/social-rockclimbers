@@ -145,16 +145,12 @@ function updateFeedbackMessagesWithCategoryFilter() {
     return undefined;
 }
 
-feedbackCategories = [];
+let feedbackCategories = [];
 
 function updateFeedbackCategories() {
-    fetch("/feedback/categories", {
-        method: "GET",
+    $.get("/feedback/categories", function( response ) {
+        feedbackCategories = response.categories;
     })
-        .then(res => res.json())
-        .then(function (response) {
-            feedbackCategories = response.categories;
-        });
 }
 
 function getCategoryNameById(categoryId) {
@@ -166,8 +162,8 @@ function getCategoryNameById(categoryId) {
 
 function showModal(title, content) {
     let modalElement = document.getElementById("exampleModal");
-    modalElement.querySelector("#modal-title").innerHTML = title;
-    modalElement.querySelector("#modal-body").innerHTML = content;
+    modalElement.querySelector("#modal-title").html(title);
+    modalElement.querySelector("#modal-body").html(content);
     let myModal = new bootstrap.Modal(modalElement, {});
 
     myModal.show();
