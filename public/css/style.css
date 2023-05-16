@@ -75,20 +75,20 @@ body {
     margin-left: 0;
 }
 
-.show {
-    z-index: 100;
-    background-color: #323638;
-    transform: translateX(-150%);
-    animation: ani 1s forwards;
-    padding: 2rem;
-}
+/*.show {*/
+/*    z-index: 100;*/
+/*    background-color: #323638;*/
+/*    transform: translateX(-150%);*/
+/*    animation: ani 1s forwards;*/
+/*    padding: 2rem;*/
+/*}*/
 
-.show ul li {
-    margin-bottom: 1rem;
-    width: 100%;
-    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, .3);
-    justify-content: center;
-}
+/*.show ul li {*/
+/*    margin-bottom: 1rem;*/
+/*    width: 100%;*/
+/*    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, .3);*/
+/*    justify-content: center;*/
+/*}*/
 
 @keyframes ani {
     0% {transform: translateY(-150%);}

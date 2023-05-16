@@ -1,21 +1,21 @@
 function sendRegistrationForm() {
-    const form = document.getElementById("registration-form");
-    if (!form.checkValidity()) {
-        const message = document.getElementById('message');
-        message.innerText = "Invalid form";
-        message.style.display = "block";
+    const form = $("#registration-form");
+    if (!form.get(0).checkValidity()) {
+        const message = $('#message');
+        message.text("Invalid form");
+        message.show();
         return;
     }
 
-    const email = document.getElementById('email');
-    const pass = document.getElementById('password');
+    const email = $('#email');
+    const pass = $('#password');
     let data = {
-        email: email.value,
-        password: pass.value
+        email: email.val(),
+        password: pass.val()
     };
     let messageElements = document.querySelectorAll(".message-js");
     for (let i = 0; i < messageElements.length; i++) {
-        messageElements[i].innerText = "";
+        messageElements[i].text('');
     }
 
     fetch("/registration", {
@@ -38,6 +38,8 @@ function sendRegistrationForm() {
                 return;
             }
             showModal("Registration successfully", res.message);
+            $('#email').text('');
+            $('#password').text('');
         });
     return undefined;
 }
@@ -119,7 +121,7 @@ function getNodeFromFeedbackMessage(feedbackMessage) {
 }
 
 function updateFeedbackMessagesWithCategoryFilter() {
-    let categoryId = document.getElementById("category-filter").value;
+    let categoryId = $("#category-filter").val();
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/feedback/messages?categoryId=" + categoryId, true)
     xhr.responseType = "json";
@@ -127,12 +129,12 @@ function updateFeedbackMessagesWithCategoryFilter() {
         let response = xhr.response;
         let feedbackMessagesData = response.feedbackMessages;
 
-        const feedbackMessagesElement = document.getElementById('feedback-messages');
-        feedbackMessagesElement.innerHTML = '';
+        const feedbackMessagesElement = $('#feedback-messages');
+        feedbackMessagesElement.html('');
 
         for (let i = 0; i < feedbackMessagesData.length; i++) {
             let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
-            feedbackMessagesElement.appendChild(feedbackMessageElement);
+            feedbackMessagesElement.append(feedbackMessageElement);
         }
     }
     xhr.send();
