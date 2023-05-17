@@ -129,22 +129,23 @@ function getNodeFromFeedbackMessage(feedbackMessage) {
 
 function updateFeedbackMessagesWithCategoryFilter() {
     let categoryId = $("#category-filter").val();
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/feedback/messages?categoryId=" + categoryId, true)
-    xhr.responseType = "json";
-    xhr.onload = function () {
-        let response = xhr.response;
-        let feedbackMessagesData = response.feedbackMessages;
 
-        const feedbackMessagesElement = $('#feedback-messages');
-        feedbackMessagesElement.html('');
+    $.ajax({
+        url: '/feedback/messages?categoryId=' + categoryId,
+        method: 'get',
+        success: function (data) {
+            let feedbackMessagesData = data.feedbackMessages;
 
-        for (let i = 0; i < feedbackMessagesData.length; i++) {
-            let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
-            feedbackMessagesElement.append(feedbackMessageElement);
+            const feedbackMessagesElement = $('#feedback-messages');
+            feedbackMessagesElement.html('');
+
+            for (let i = 0; i < feedbackMessagesData.length; i++) {
+                let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
+                feedbackMessagesElement.append(feedbackMessageElement);
+            }
         }
-    }
-    xhr.send();
+    })
+
     return undefined;
 }
 
