@@ -76,23 +76,24 @@ function sendFeedbackMessage() {
         categoryId: getCategoryId(),
     };
 
-    fetch("/feedback/messages", {
-        method: "POST",
+    $.ajax({
+        url: '/feedback/messages',
+        type: 'post',
+        data: JSON.stringify(data),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(function (response) {
+        dataType: 'json',
+        success: function (data) {
             const filterElement = $("#category-filter");
-            filterElement.value = response.categoryId;
+            filterElement.val(data.categoryId);
             updateFeedbackMessagesWithCategoryFilter();
 
             $("#name-user").val('');
             $('#feedback-message').val('');
-        });
+        }
+    })
 
     return undefined;
 }
