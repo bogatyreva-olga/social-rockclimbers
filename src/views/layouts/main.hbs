@@ -1,10 +1,15 @@
 <html>
 <head>
     <title>Express handlebars</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">.
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+            src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="css/all.css" rel="stylesheet" type="text/css">
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link href="css/registration.css" rel="stylesheet" type="text/css">
@@ -13,16 +18,16 @@
     <link href="css/header.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div class="header row">
+<header class="header row">
+    <div id="test"></div>
     <nav class="navbar navbar-expand-lg navbar-dark" id="headerNav">
         <div class="container-fluid">
             <a class="navbar-brand d-block d-lg-none" href="#">
-
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class=" collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mx-auto ">
                     <li class="nav-item">
@@ -53,15 +58,15 @@
             </div>
         </div>
     </nav>
-</div>
+</header>
 <div class="wrapper">
     <div class="content">{{{body}}}</div>
     <div class="footer">
         <div class="logo-list">
-            <img src="img/facebook.png" alt="facebook" class="logo fb">
-            <img src="img/instagram.png" alt="instagram" class="logo inst">
-            <img src="img/telegram.png" alt="telegram" class="logo tl">
-            <img src="img/vk.png" alt="vk" class="logo vk">
+            <a class="logo-link" href="#"> <i class="fa-brands fa-square-facebook fa-2xl logo"></i></a>
+            <a class="logo-link" href="#"> <i class="fa-brands fa-instagram fa-2xl logo"></i></a>
+            <a class="logo-link" href="#"> <i class="fa-brands fa-telegram fa-2xl logo"></i></a>
+            <a class="logo-link" href="#"> <i class="fa-brands fa-vk fa-2xl logo"></i></a>
         </div>
     </div>
 </div>

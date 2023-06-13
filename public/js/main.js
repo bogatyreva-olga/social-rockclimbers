@@ -1,53 +1,58 @@
 function sendRegistrationForm() {
-    const form = document.getElementById("registration-form");
-    if (!form.checkValidity()) {
-        const message = document.getElementById('message');
-        message.innerText = "Invalid form";
-        message.style.display = "block";
+    const form = $("#registration-form");
+    if (!form.get(0).checkValidity()) {
+        const message = $('#message');
+        message.text("Invalid form");
+        message.show();
         return;
     }
 
-    const email = document.getElementById('email');
-    const pass = document.getElementById('password');
+    const email = $('#email');
+    const pass = $('#password');
     let data = {
-        email: email.value,
-        password: pass.value
+        email: email.val(),
+        password: pass.val()
     };
-    let messageElements = document.querySelectorAll(".message-js");
-    for (let i = 0; i < messageElements.length; i++) {
-        messageElements[i].innerText = "";
-    }
 
-    fetch("/registration", {
-        method: "POST",
+    let messageElements = $(".message-js");
+    $(messageElements).each(function (i, elem) {
+        $(elem).text('');
+    })
+
+    $.ajax({
+        url: '/registration',
+        type: 'post',
+        data: JSON.stringify(data),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
-    })
-        .then(res => res.json())
-        .then(function (res) {
-            if (!res.success) {
-                for (let i = 0; i < res.errors.length; i++) {
-                    let error = res.errors[i];
-                    let errorMsgElement = document.getElementById("error-" + error.param + "-js");
-                    errorMsgElement.innerText = error.msg;
-                    errorMsgElement.style.display = "block";
-                }
-                return;
+        dataType: 'json',
+        success: function (data) {
+            showModal("Registration successfully", data.message);
+            $('#email').val('');
+            $('#password').val('');
+        },
+        error: function (data) {
+            let res = data.responseJSON;
+            for (let i = 0; i < res.errors.length; i++) {
+                let error = res.errors[i];
+                let errorMsgElement = $("#error-" + error.param + "-js");
+                errorMsgElement.text(error.msg);
+                errorMsgElement.show();
             }
-            showModal("Registration successfully", res.message);
-        });
+        }
+    });
+
     return undefined;
 }
 
 function getFeedbackMessageValue() {
-    return document.getElementById('feedback-message').value;
+    return $('#feedback-message').val();
 }
 
 function getNameUserValue() {
-    return document.getElementById("name-user").value;
+    return $('#name-user').val();
 }
 
 function dateFormat(timestamp) {
@@ -61,7 +66,7 @@ function dateFormat(timestamp) {
 }
 
 function getCategoryId() {
-    return document.getElementById("category").value;
+    return $("#category").val();
 }
 
 function sendFeedbackMessage() {
@@ -71,81 +76,85 @@ function sendFeedbackMessage() {
         categoryId: getCategoryId(),
     };
 
-    fetch("/feedback/messages", {
-        method: "POST",
+    $.ajax({
+        url: '/feedback/messages',
+        type: 'post',
+        data: JSON.stringify(data),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(function (response) {
-            const filterElement = document.getElementById("category-filter");
-            console.log(response.categoryId);
-            filterElement.value = response.categoryId;
+        dataType: 'json',
+        success: function (data) {
+            const filterElement = $("#category-filter");
+            filterElement.val(data.categoryId);
             updateFeedbackMessagesWithCategoryFilter();
 
-            document.getElementById("name-user").value = "";
-            document.getElementById('feedback-message').value = "";
-        });
+            $("#name-user").val('');
+            $('#feedback-message').val('');
+        }
+    })
 
     return undefined;
 }
 
 function getNodeFromFeedbackMessage(feedbackMessage) {
-    let feedbackMessageElement = document.createElement("div");
-    feedbackMessageElement.classList.add("message-item");
+    let feedbackMessageElement = $('<div/>', {
+        class: 'message-item'
+    });
+    let dateElement = $('<div/>', {
+        text: dateFormat(feedbackMessage.createdAt),
+        class: 'date-message'
+    });
+    $(feedbackMessageElement).append(dateElement);
 
-    let dateElement = document.createElement("div");
-    dateElement.innerText = dateFormat(feedbackMessage.createdAt);
-    dateElement.classList.add("date-message");
-    feedbackMessageElement.appendChild(dateElement);
+    let userMessageElement = $('<div/>', {
+        class: 'user-message'
+    });
+    let paragraphMessageElement = $('<p/>', {
+        class: 'text-break',
+        text: feedbackMessage.message
+    });
+    userMessageElement.append(paragraphMessageElement);
+    feedbackMessageElement.append(userMessageElement);
 
-    let userMessageElement = document.createElement("div");
-    userMessageElement.innerText = feedbackMessage.message;
-    userMessageElement.classList.add("user-message");
-    feedbackMessageElement.appendChild(userMessageElement);
-
-    let userNameElement = document.createElement("div");
-    userNameElement.innerText = feedbackMessage.userName;
-    userNameElement.classList.add("user-name");
-    feedbackMessageElement.appendChild(userNameElement);
+    let userNameElement = $('<div/>', {
+        text: feedbackMessage.userName,
+        class: 'user-name'
+    });
+    feedbackMessageElement.append(userNameElement);
 
     return feedbackMessageElement;
 }
 
 function updateFeedbackMessagesWithCategoryFilter() {
-    let categoryId = document.getElementById("category-filter").value;
-    fetch("/feedback/messages?categoryId=" + categoryId, {
-        method: "GET",
-    })
-        .then(function (res) {  return res.json()})
-        .then(function (response) {
-            let feedbackMessagesData = response.feedbackMessages;
+    let categoryId = $("#category-filter").val();
 
-            const feedbackMessagesElement = document.getElementById('feedback-messages');
-            feedbackMessagesElement.innerHTML = '';
+    $.ajax({
+        url: '/feedback/messages?categoryId=' + categoryId,
+        method: 'get',
+        success: function (data) {
+            let feedbackMessagesData = data.feedbackMessages;
+
+            const feedbackMessagesElement = $('#feedback-messages');
+            feedbackMessagesElement.html('');
 
             for (let i = 0; i < feedbackMessagesData.length; i++) {
                 let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
-                feedbackMessagesElement.appendChild(feedbackMessageElement);
+                feedbackMessagesElement.append(feedbackMessageElement);
             }
-        });
+        }
+    })
 
     return undefined;
 }
 
-feedbackCategories = [];
+let feedbackCategories = [];
 
 function updateFeedbackCategories() {
-    fetch("/feedback/categories", {
-        method: "GET",
+    $.get("/feedback/categories", function (response) {
+        feedbackCategories = response.categories;
     })
-        .then(res => res.json())
-        .then(function (response) {
-            feedbackCategories = response.categories;
-        });
 }
 
 function getCategoryNameById(categoryId) {
@@ -156,31 +165,32 @@ function getCategoryNameById(categoryId) {
 }
 
 function showModal(title, content) {
-    let modalElement = document.getElementById("exampleModal");
-    modalElement.querySelector("#modal-title").innerHTML = title;
-    modalElement.querySelector("#modal-body").innerHTML = content;
+    let modalElement = $("#exampleModal");
+    modalElement.find("#modal-title").html(title);
+    modalElement.find("#modal-body").html(content);
     let myModal = new bootstrap.Modal(modalElement, {});
 
     myModal.show();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function () {
 
-    const submitRegistrationButton = document.getElementById('submit-registration');
+    const submitRegistrationButton = $('#submit-registration');
     if (submitRegistrationButton) {
-        submitRegistrationButton.addEventListener('click', sendRegistrationForm);
+        $(submitRegistrationButton).click(sendRegistrationForm);
     }
 
-    const sendFeedbackMessageButton = document.getElementById('send-feedback-message');
+    const sendFeedbackMessageButton = $('#send-feedback-message');
+
     if (sendFeedbackMessageButton) {
-        sendFeedbackMessageButton.addEventListener('click', sendFeedbackMessage);
+        $(sendFeedbackMessageButton).click(sendFeedbackMessage);
         setInterval(updateFeedbackMessagesWithCategoryFilter, 15000);
         updateFeedbackCategories();
         updateFeedbackMessagesWithCategoryFilter();
     }
 
-    const filterCategorySelect = document.getElementById("category-filter");
+    const filterCategorySelect = $("#category-filter");
     if (filterCategorySelect) {
-        filterCategorySelect.addEventListener('change', updateFeedbackMessagesWithCategoryFilter);
+        $(filterCategorySelect).change(updateFeedbackMessagesWithCategoryFilter);
     }
 });

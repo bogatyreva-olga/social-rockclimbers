@@ -52,6 +52,10 @@ app.get('/registration', (request, response) => {
     response.render('registration');
 });
 
+app.get('/shop', (request, response) => {
+    response.render('shop');
+});
+
 const minPasswordLength = 6;
 app.post('/registration',
     body('email').isEmail().withMessage("Invalid email").normalizeEmail(),

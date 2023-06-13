@@ -1,5 +1,4 @@
 .home {
-    font-family: "Times New Roman", sans-serif;
     background: url("../img/climber-man.jpg") center center no-repeat;
     background-size: cover;
     margin-bottom: 100px;
@@ -16,6 +15,7 @@
 @media (min-width: 768px) {
     .home-content {
         max-width: 60%;
+        text-align: left;
     }
 }
 
