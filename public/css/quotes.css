@@ -2,16 +2,23 @@
     width: 100%;
     height: 100%;
     font-family: Raleway, sans-serif;
+    position: relative;
 }
 
 #quote__wrapper {
     margin: 0 auto;
     max-width: 550px;
     background-color: #eeeeee;
+    border-radius: 5px;
+    position: absolute;
+    top: 20%;
+    left: calc(50vw - 250px);
 }
 
 #quote__box {
     padding: 50px;
+    height: auto;
+    display: table;
 }
 
 #quote__box .quote__text {
@@ -36,4 +43,12 @@
 #author {
     font-size: 20px;
     text-align: right;
+}
+
+#new-quote {
+    padding: 8px 18px;
+    color: #eeeeee;
+    border: none;
+    border-radius: 5px;
+    margin-top: 30px;
 }

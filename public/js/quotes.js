@@ -2,6 +2,7 @@ import {quotes, colors} from "./quotes-data.js";
 
 let changeBackgroundColor = () => {
     let quotePage = $(".quote");
+    let nextColorBtn = $("#new-quote")
     let randomIndexColor = Math.floor(Math.random() * colors.length);
     let currentColor = quotePage.css("background-color");
 
@@ -10,6 +11,7 @@ let changeBackgroundColor = () => {
     }
     quotePage.css("background-color", colors[randomIndexColor]);
     quotePage.css("color", colors[randomIndexColor]);
+    nextColorBtn.css("background-color", colors[randomIndexColor])
 };
 
 let showNewQuote = () => {
