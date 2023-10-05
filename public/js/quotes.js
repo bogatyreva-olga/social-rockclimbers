@@ -2,19 +2,16 @@ import {quotes, colors} from "./quotes-data.js";
 
 let changeBackgroundColor = () => {
     let quotePage = $(".quote");
-    quotePage.css("background-color", () => {
-        let randomIndexColor = Math.floor(Math.random() * colors.length);
-        return colors[randomIndexColor];
-    });
+    let randomIndexColor = Math.floor(Math.random() * colors.length);
+    let currentColor = quotePage.css("background-color");
+
+    while (currentColor === colors[randomIndexColor]) {
+        randomIndexColor = Math.floor(Math.random() * colors.length);
+    }
+    quotePage.css("background-color", colors[randomIndexColor]);
 };
 
-let changeNewQuote = () => {
-let textQuote = $("#text");
-let randomIndexQuote = Math.floor(Math.random() * quotes.length);
-
-}
-
 $(document).ready(() => {
+    changeBackgroundColor();
     $("#new-quote").click(changeBackgroundColor);
-    $("#new-quote").click(changeNewQuote);
 });
