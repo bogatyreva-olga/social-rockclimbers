@@ -1,14 +1,15 @@
 // index.js
-console.log("start server")
+console.log("start server");
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
-const {body, validationResult} = require('express-validator');
+const {body, validationResult, query} = require('express-validator');
 const bodyParser = require('body-parser');
 
 const FeedbackMessage = require('./models/feedback-message');
 const User = require('./models/user');
+const {response} = require("express");
 
 const feedbackMessagesFileName = 'data/feedback-messages.data';
 const usersFileName = 'data/users.data';
@@ -128,6 +129,15 @@ app.get('/feedback/categories', (request, response) => {
     });
 });
 
+app.get('/name', (request, response) => {
+    console.log(request.query)
+    response.json({name: request.query.first + " " + request.query.last})
+})
+
+app.use('/json', (req, response) => {
+    response.send(req.method + " " + req.path + " - " + req.ip);
+});
+
 function getFeedbackMessagesByCategoryId(categoryId) {
     let data = [];
     if (!fs.existsSync(feedbackMessagesFileName)) {
@@ -173,5 +183,6 @@ function getFeedbackCategories() {
         },
     ];
 }
-console.log("go to http://localhost:3001")
+
+console.log("go to http://localhost:3001");
 app.listen(3001);
