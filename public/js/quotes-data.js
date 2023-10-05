@@ -36,4 +36,4 @@ let colors = [
     "#9B59B6", "#472E32", "#2C3E50", "#77B1A9", "#BDBB99", "#FB6964", "#27AE60"
 ]
 
-
+export {colors, quotes};
