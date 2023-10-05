@@ -1,0 +1,13 @@
+.quote {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+#quote__box .quote__text {
+    text-align: center;
+    width: 450px;
+    height: auto;
+    clear: both;
+    font-weight: 500;
+    font-size: 1.75em;
+}

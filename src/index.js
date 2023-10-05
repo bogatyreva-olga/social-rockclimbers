@@ -49,6 +49,10 @@ app.get('/users', (request, response) => {
     });
 });
 
+app.get('/quotes', (request, response) => {
+    response.render('quotes');
+});
+
 app.get('/registration', (request, response) => {
     response.render('registration');
 });
