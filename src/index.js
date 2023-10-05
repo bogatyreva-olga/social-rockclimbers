@@ -49,6 +49,10 @@ app.get('/users', (request, response) => {
     });
 });
 
+app.get('/quotes', (request, response) => {
+    response.render('quotes');
+});
+
 app.get('/registration', (request, response) => {
     response.render('registration');
 });
@@ -184,5 +188,5 @@ function getFeedbackCategories() {
     ];
 }
 
-console.log("go to http://localhost:3001");
-app.listen(3001);
+console.log("go to http://localhost:3002");
+app.listen(3002);
