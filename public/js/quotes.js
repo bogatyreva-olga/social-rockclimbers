@@ -33,7 +33,9 @@ let showNewQuote = () => {
     }
     let newAuthor = quotes[randomIndexQuote].author;
     let newQuote = quotes[randomIndexQuote].text;
-    $("#text").hide().fadeIn(1200);
+    $(".fa-quote-left").hide().fadeIn(1200);
+    textQuote.hide().fadeIn(1200);
+    authorQuote.hide().fadeIn(1200);
 
     return [textQuote.text(newQuote), authorQuote.text(newAuthor)];
 };
