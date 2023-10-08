@@ -52,3 +52,7 @@
     border-radius: 5px;
     margin-top: 30px;
 }
+
+#new-quote:hover {
+    opacity: 0.8;
+}
