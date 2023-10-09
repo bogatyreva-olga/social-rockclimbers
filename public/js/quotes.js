@@ -40,9 +40,17 @@ let showNewQuote = () => {
     return [textQuote.text(newQuote), authorQuote.text(newAuthor)];
 };
 
+let disableBtn = () => {
+    $("#new-quote").attr("disabled", "disabled");
+    setTimeout(() => {
+        $("#new-quote").removeAttr("disabled");
+    }, 1000);
+}
+
 $(document).ready(() => {
     showNewQuote();
     changeBackgroundColor();
     $("#new-quote").click(changeBackgroundColor);
     $("#new-quote").click(showNewQuote);
+    $("#new-quote").click(disableBtn);
 });
