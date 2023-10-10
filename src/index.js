@@ -134,7 +134,6 @@ app.get('/feedback/categories', (request, response) => {
 });
 
 app.get('/name', (request, response) => {
-    console.log(request.query)
     response.json({name: request.query.first + " " + request.query.last})
 })
 
