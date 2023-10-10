@@ -61,6 +61,11 @@ app.get('/shop', (request, response) => {
     response.render('shop');
 });
 
+app.get('/random-colors', (request, response) => {
+    let colors = getColors();
+    response.json(colors[0]);
+})
+
 const minPasswordLength = 6;
 app.post('/registration',
     body('email').isEmail().withMessage("Invalid email").normalizeEmail(),
@@ -133,9 +138,11 @@ app.get('/feedback/categories', (request, response) => {
     });
 });
 
+
+
 app.get('/name', (request, response) => {
     response.json({name: request.query.first + " " + request.query.last})
-})
+});
 
 app.use('/json', (req, response) => {
     response.send(req.method + " " + req.path + " - " + req.ip);
@@ -186,6 +193,71 @@ function getFeedbackCategories() {
         },
     ];
 }
+
+function getColors() {
+    return [
+        {
+            id: 1,
+            value: '#16a085'
+        },
+
+        {
+            id: 2,
+            value: '#27ae60'
+        },
+
+        {
+            id: 3,
+            value: '#2c3e50'
+        },
+
+        {
+            id: 4,
+            value: '#f39c12'
+        },
+
+        {
+            id: 5,
+            value: '#e74c3c'
+        },
+
+        {
+            id: 6,
+            value: '#9b59b6'
+        },
+
+        {
+            id: 7,
+            value: '#FB6964'
+        },
+
+        {
+            id: 8,
+            value: '#342224'
+        },
+
+        {
+            id: 9,
+            value: '#472E32'
+        },
+
+        {
+            id: 10,
+            value: '#BDBB99'
+        },
+
+        {
+            id: 11,
+            value: '#77B1A9'
+        },
+
+        {
+            id: 12,
+            value: '#73A857'
+        }
+    ];
+}
+
 
 console.log("go to http://localhost:3002");
 app.listen(3002);
