@@ -1,23 +1,36 @@
-import {quotes, colors} from "./quotes-data.js";
+import {quotes} from "./quotes-data.js";
 
 let changeBackgroundColor = () => {
-    let quotePage = $(".quote");
-    let nextColorBtn = $("#new-quote");
-    let randomIndexColor = Math.floor(Math.random() * colors.length);
-    let currentColor = quotePage.css("background-color");
 
-    while (currentColor === colors[randomIndexColor]) {
-        randomIndexColor = Math.floor(Math.random() * colors.length);
-    }
-    quotePage.css({
-        'background-color': colors[randomIndexColor],
-        'color': colors[randomIndexColor],
-        'transition': 'all 1.5s'
-    });
+    $.ajax({
+        url: '/random-colors',
+        type: 'get',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            let hex = data.value;
+            let quotePage = $(".quote");
+            let nextColorBtn = $("#new-quote");
 
-    nextColorBtn.css({
-        "background-color": colors[randomIndexColor],
-        'transition': 'all 1.5s'
+            let currentColor = quotePage.css("background-color");
+
+            quotePage.css({
+                'background-color': hex,
+                'color': hex,
+                'transition': 'all 1.5s'
+            });
+
+            nextColorBtn.css({
+                "background-color": hex,
+                'transition': 'all 1.5s'
+            });
+            console.log(data);
+        },
+        error: function (data) {
+            console.log(data);
+        }
     });
 };
 
@@ -45,7 +58,7 @@ let disableBtn = () => {
     setTimeout(() => {
         $("#new-quote").removeAttr("disabled");
     }, 1000);
-}
+};
 
 $(document).ready(() => {
     showNewQuote();

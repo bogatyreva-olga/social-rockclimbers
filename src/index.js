@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const FeedbackMessage = require('./models/feedback-message');
 const User = require('./models/user');
 const {response} = require("express");
-
 const feedbackMessagesFileName = 'data/feedback-messages.data';
 const usersFileName = 'data/users.data';
 
@@ -63,7 +62,8 @@ app.get('/shop', (request, response) => {
 
 app.get('/random-colors', (request, response) => {
     let colors = getColors();
-    response.json(colors[0]);
+    let randomIndexColor = Math.floor(Math.random() * colors.length);
+    response.json(colors[randomIndexColor]);
 })
 
 const minPasswordLength = 6;
