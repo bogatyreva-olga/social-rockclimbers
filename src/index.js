@@ -61,10 +61,17 @@ app.get('/shop', (request, response) => {
 });
 
 app.get('/random-colors', (request, response) => {
+    let excludeId = parseInt(request.query.excludeId);
     let colors = getColors();
+    if (excludeId > 0) {
+        colors = getColors().filter((el) => {
+            return el.id !== excludeId;
+        });
+    }
+
     let randomIndexColor = Math.floor(Math.random() * colors.length);
     response.json(colors[randomIndexColor]);
-})
+});
 
 const minPasswordLength = 6;
 app.post('/registration',
@@ -139,7 +146,7 @@ app.get('/feedback/categories', (request, response) => {
 });
 
 app.get('/name', (request, response) => {
-    response.json({name: request.query.first + " " + request.query.last})
+    response.json({name: request.query.first + " " + request.query.last});
 });
 
 app.use('/json', (req, response) => {
@@ -187,7 +194,7 @@ function getFeedbackCategories() {
         },
         {
             id: 3,
-            name: "Рассписание",
+            name: "Расписание",
         },
     ];
 }
@@ -255,7 +262,6 @@ function getColors() {
         }
     ];
 }
-
 
 console.log("go to http://localhost:3002");
 app.listen(3002);
