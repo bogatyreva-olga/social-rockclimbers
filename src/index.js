@@ -138,8 +138,6 @@ app.get('/feedback/categories', (request, response) => {
     });
 });
 
-
-
 app.get('/name', (request, response) => {
     response.json({name: request.query.first + " " + request.query.last})
 });

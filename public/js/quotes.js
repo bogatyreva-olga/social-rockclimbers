@@ -1,9 +1,19 @@
 import {quotes} from "./quotes-data.js";
 
 let changeBackgroundColor = () => {
+    const dataColorId = "data-colorId";
+
+    let quotePage = $(".quote");
+
+    let currentColorId = quotePage.attr(dataColorId);
+    let requestColorId = "";
+
+    if (currentColorId !== undefined) {
+        requestColorId = "?excludeId=" + currentColorId;
+    }
 
     $.ajax({
-        url: '/random-colors',
+        url: `/random-colors${requestColorId}`,
         type: 'get',
         headers: {
             'Accept': 'application/json',
@@ -11,11 +21,9 @@ let changeBackgroundColor = () => {
         },
         success: function (data) {
             let hex = data.value;
-            let quotePage = $(".quote");
+            let currentIdColor = data.id;
             let nextColorBtn = $("#new-quote");
-
-            let currentColor = quotePage.css("background-color");
-
+            quotePage.attr(dataColorId, currentIdColor);
             quotePage.css({
                 'background-color': hex,
                 'color': hex,
@@ -26,7 +34,6 @@ let changeBackgroundColor = () => {
                 "background-color": hex,
                 'transition': 'all 1.5s'
             });
-            console.log(data);
         },
         error: function (data) {
             console.log(data);
