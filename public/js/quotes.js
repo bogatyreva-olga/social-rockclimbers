@@ -42,9 +42,15 @@ let changeBackgroundColor = () => {
 let showNewQuote = () => {
     let textQuote = $("#text");
     let authorQuote = $("#author");
+    const dataQuoteId = "data-quote-id";
+    let currentQuoteId = textQuote.attr(dataQuoteId);
+    let requestQuoteId = "";
+    if (currentQuoteId !== undefined) {
+        requestQuoteId = "?excludeId=" + currentQuoteId;
+    }
 
     $.ajax({
-            url: `/random-quotes`,
+            url: `/random-quotes${requestQuoteId}`,
             type: 'get',
             headers: {
                 'Accept': 'application/json',
@@ -53,6 +59,8 @@ let showNewQuote = () => {
             success: function (data) {
                 let newAuthor = data.author;
                 let newQuote = data.text;
+                let currentQuoteId = data.id;
+                textQuote.attr(dataQuoteId, currentQuoteId);
                 $(".fa-quote-left").hide().fadeIn(1200);
                 textQuote.hide().fadeIn(1200);
                 authorQuote.hide().fadeIn(1200);

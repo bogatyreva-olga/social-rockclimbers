@@ -75,6 +75,12 @@ app.get('/random-colors', (request, response) => {
 
 app.get('/random-quotes', (request, response) => {
     let quotes = getQuotes();
+    let excludeId = parseInt(request.query.excludeId);
+    if (excludeId > 0) {
+        quotes = getQuotes().filter((el) => {
+            return el.id !== excludeId;
+        });
+    }
     let randomIndexQuote = Math.floor(Math.random() * quotes.length);
     response.json(quotes[randomIndexQuote]);
 });

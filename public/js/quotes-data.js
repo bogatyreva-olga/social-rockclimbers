@@ -26,4 +26,3 @@ let quotes = [
 
 ];
 
-export {quotes};
