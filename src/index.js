@@ -75,7 +75,9 @@ app.get('/random-colors', (request, response) => {
 
 app.get('/random-quotes', (request, response) => {
     let quotes = getQuotes();
-})
+    let randomIndexQuote = Math.floor(Math.random() * quotes.length);
+    response.json(quotes[randomIndexQuote]);
+});
 
 const minPasswordLength = 6;
 app.post('/registration',
@@ -270,30 +272,35 @@ function getColors() {
 function getQuotes() {
     return [
         {
+            id: 1,
             "text": "Скалолазание - моя свобода. Моя жизнь в вертикальном мире ",
             "author": "Линн Хилл"
         },
         {
+            id: 2,
             "text": "Мозг- самая важная мышца в скалолазании",
             "author": "Вольфганг Гюллих"
         },
         {
+            id: 3,
             "text": "Я никогда не тренируюсь на самом деле. Я просто всегда был скалолазом",
             "author": "Крис Шарма"
         },
         {
+            id: 4,
             "text": "Никогда я не исследовал жизнь так интенсивно в ее красоте, как когда я свободно висел на кончиках двух пальцев над глубокой впадиной",
             "author": "Вольфганг Гюллих"
         },
         {
+            id: 5,
             "text": "Есть два типа альпинистов: те, кто поднимается, потому что их сердце поет, когда они в горах, и все остальные",
             "author": "Алекс Лоу"
         },
         {
+            id: 6,
             "text": "Горы - это не стадионы, на которых я удовлетворяю свои амбиции, это соборы, где я исповедую свою религию",
             "author": "Анатолий Букреев"
         },
-
     ];
 }
 

@@ -1,5 +1,3 @@
-import {quotes} from "./quotes-data.js";
-
 let changeBackgroundColor = () => {
     const dataColorId = "data-colorId";
 
@@ -46,14 +44,20 @@ let showNewQuote = () => {
     let authorQuote = $("#author");
 
     $.ajax({
-            url: `/random-quites`,
+            url: `/random-quotes`,
             type: 'get',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             success: function (data) {
+                let newAuthor = data.author;
+                let newQuote = data.text;
+                $(".fa-quote-left").hide().fadeIn(1200);
+                textQuote.hide().fadeIn(1200);
+                authorQuote.hide().fadeIn(1200);
 
+                return [textQuote.text(newQuote), authorQuote.text(newAuthor)];
             },
             error: function (data) {
                 console.log(data);
@@ -61,19 +65,6 @@ let showNewQuote = () => {
         },
     );
 
-    let randomIndexQuote = Math.floor(Math.random() * quotes.length);
-    let currentQuote = textQuote.text();
-
-    while (currentQuote === quotes[randomIndexQuote].text) {
-        randomIndexQuote = Math.floor(Math.random() * quotes.length);
-    }
-    let newAuthor = quotes[randomIndexQuote].author;
-    let newQuote = quotes[randomIndexQuote].text;
-    $(".fa-quote-left").hide().fadeIn(1200);
-    textQuote.hide().fadeIn(1200);
-    authorQuote.hide().fadeIn(1200);
-
-    return [textQuote.text(newQuote), authorQuote.text(newAuthor)];
 };
 
 let disableBtn = () => {
