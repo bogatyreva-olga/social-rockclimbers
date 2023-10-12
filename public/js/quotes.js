@@ -1,43 +1,78 @@
-import {quotes, colors} from "./quotes-data.js";
-
 let changeBackgroundColor = () => {
+    const dataColorId = "data-colorId";
+
     let quotePage = $(".quote");
-    let nextColorBtn = $("#new-quote");
-    let randomIndexColor = Math.floor(Math.random() * colors.length);
-    let currentColor = quotePage.css("background-color");
 
-    while (currentColor === colors[randomIndexColor]) {
-        randomIndexColor = Math.floor(Math.random() * colors.length);
+    let currentColorId = quotePage.attr(dataColorId);
+    let requestColorId = "";
+
+    if (currentColorId !== undefined) {
+        requestColorId = "?excludeId=" + currentColorId;
     }
-    quotePage.css({
-        'background-color': colors[randomIndexColor],
-        'color': colors[randomIndexColor],
-        'transition': 'all 1.5s'
-    });
 
-    nextColorBtn.css({
-        "background-color": colors[randomIndexColor],
-        'transition': 'all 1.5s'
+    $.ajax({
+        url: `/random-colors${requestColorId}`,
+        type: 'get',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            let hex = data.value;
+            let currentIdColor = data.id;
+            let nextColorBtn = $("#new-quote");
+            quotePage.attr(dataColorId, currentIdColor);
+            quotePage.css({
+                'background-color': hex,
+                'color': hex,
+                'transition': 'all 1.5s'
+            });
+
+            nextColorBtn.css({
+                "background-color": hex,
+                'transition': 'all 1.5s'
+            });
+        },
+        error: function (data) {
+            console.log(data);
+        }
     });
 };
 
 let showNewQuote = () => {
     let textQuote = $("#text");
     let authorQuote = $("#author");
-
-    let randomIndexQuote = Math.floor(Math.random() * quotes.length);
-    let currentQuote = textQuote.text();
-
-    while (currentQuote === quotes[randomIndexQuote].text) {
-        randomIndexQuote = Math.floor(Math.random() * quotes.length);
+    const dataQuoteId = "data-quote-id";
+    let currentQuoteId = textQuote.attr(dataQuoteId);
+    let requestQuoteId = "";
+    if (currentQuoteId !== undefined) {
+        requestQuoteId = "?excludeId=" + currentQuoteId;
     }
-    let newAuthor = quotes[randomIndexQuote].author;
-    let newQuote = quotes[randomIndexQuote].text;
-    $(".fa-quote-left").hide().fadeIn(1200);
-    textQuote.hide().fadeIn(1200);
-    authorQuote.hide().fadeIn(1200);
 
-    return [textQuote.text(newQuote), authorQuote.text(newAuthor)];
+    $.ajax({
+            url: `/random-quotes${requestQuoteId}`,
+            type: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            success: function (data) {
+                let newAuthor = data.author;
+                let newQuote = data.text;
+                let currentQuoteId = data.id;
+                textQuote.attr(dataQuoteId, currentQuoteId);
+                $(".fa-quote-left").hide().fadeIn(1200);
+                textQuote.hide().fadeIn(1200);
+                authorQuote.hide().fadeIn(1200);
+
+                return [textQuote.text(newQuote), authorQuote.text(newAuthor)];
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        },
+    );
+
 };
 
 let disableBtn = () => {
@@ -45,7 +80,7 @@ let disableBtn = () => {
     setTimeout(() => {
         $("#new-quote").removeAttr("disabled");
     }, 1000);
-}
+};
 
 $(document).ready(() => {
     showNewQuote();

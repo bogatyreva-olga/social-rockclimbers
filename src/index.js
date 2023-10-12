@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const FeedbackMessage = require('./models/feedback-message');
 const User = require('./models/user');
 const {response} = require("express");
-
 const feedbackMessagesFileName = 'data/feedback-messages.data';
 const usersFileName = 'data/users.data';
 
@@ -59,6 +58,31 @@ app.get('/registration', (request, response) => {
 
 app.get('/shop', (request, response) => {
     response.render('shop');
+});
+
+app.get('/random-colors', (request, response) => {
+    let excludeId = parseInt(request.query.excludeId);
+    let colors = getColors();
+    if (excludeId > 0) {
+        colors = getColors().filter((el) => {
+            return el.id !== excludeId;
+        });
+    }
+
+    let randomIndexColor = Math.floor(Math.random() * colors.length);
+    response.json(colors[randomIndexColor]);
+});
+
+app.get('/random-quotes', (request, response) => {
+    let quotes = getQuotes();
+    let excludeId = parseInt(request.query.excludeId);
+    if (excludeId > 0) {
+        quotes = getQuotes().filter((el) => {
+            return el.id !== excludeId;
+        });
+    }
+    let randomIndexQuote = Math.floor(Math.random() * quotes.length);
+    response.json(quotes[randomIndexQuote]);
 });
 
 const minPasswordLength = 6;
@@ -134,9 +158,8 @@ app.get('/feedback/categories', (request, response) => {
 });
 
 app.get('/name', (request, response) => {
-    console.log(request.query)
-    response.json({name: request.query.first + " " + request.query.last})
-})
+    response.json({name: request.query.first + " " + request.query.last});
+});
 
 app.use('/json', (req, response) => {
     response.send(req.method + " " + req.path + " - " + req.ip);
@@ -183,7 +206,106 @@ function getFeedbackCategories() {
         },
         {
             id: 3,
-            name: "Рассписание",
+            name: "Расписание",
+        },
+    ];
+}
+
+function getColors() {
+    return [
+        {
+            id: 1,
+            value: '#16a085'
+        },
+
+        {
+            id: 2,
+            value: '#27ae60'
+        },
+
+        {
+            id: 3,
+            value: '#2c3e50'
+        },
+
+        {
+            id: 4,
+            value: '#f39c12'
+        },
+
+        {
+            id: 5,
+            value: '#e74c3c'
+        },
+
+        {
+            id: 6,
+            value: '#9b59b6'
+        },
+
+        {
+            id: 7,
+            value: '#FB6964'
+        },
+
+        {
+            id: 8,
+            value: '#342224'
+        },
+
+        {
+            id: 9,
+            value: '#472E32'
+        },
+
+        {
+            id: 10,
+            value: '#BDBB99'
+        },
+
+        {
+            id: 11,
+            value: '#77B1A9'
+        },
+
+        {
+            id: 12,
+            value: '#73A857'
+        }
+    ];
+}
+
+function getQuotes() {
+    return [
+        {
+            id: 1,
+            "text": "Скалолазание - моя свобода. Моя жизнь в вертикальном мире ",
+            "author": "Линн Хилл"
+        },
+        {
+            id: 2,
+            "text": "Мозг- самая важная мышца в скалолазании",
+            "author": "Вольфганг Гюллих"
+        },
+        {
+            id: 3,
+            "text": "Я никогда не тренируюсь на самом деле. Я просто всегда был скалолазом",
+            "author": "Крис Шарма"
+        },
+        {
+            id: 4,
+            "text": "Никогда я не исследовал жизнь так интенсивно в ее красоте, как когда я свободно висел на кончиках двух пальцев над глубокой впадиной",
+            "author": "Вольфганг Гюллих"
+        },
+        {
+            id: 5,
+            "text": "Есть два типа альпинистов: те, кто поднимается, потому что их сердце поет, когда они в горах, и все остальные",
+            "author": "Алекс Лоу"
+        },
+        {
+            id: 6,
+            "text": "Горы - это не стадионы, на которых я удовлетворяю свои амбиции, это соборы, где я исповедую свою религию",
+            "author": "Анатолий Букреев"
         },
     ];
 }
