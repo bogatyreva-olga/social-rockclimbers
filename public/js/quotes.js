@@ -45,6 +45,22 @@ let showNewQuote = () => {
     let textQuote = $("#text");
     let authorQuote = $("#author");
 
+    $.ajax({
+            url: `/random-quites`,
+            type: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            success: function (data) {
+
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        },
+    );
+
     let randomIndexQuote = Math.floor(Math.random() * quotes.length);
     let currentQuote = textQuote.text();
 

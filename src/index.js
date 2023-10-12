@@ -73,6 +73,10 @@ app.get('/random-colors', (request, response) => {
     response.json(colors[randomIndexColor]);
 });
 
+app.get('/random-quotes', (request, response) => {
+    let quotes = getQuotes();
+})
+
 const minPasswordLength = 6;
 app.post('/registration',
     body('email').isEmail().withMessage("Invalid email").normalizeEmail(),
@@ -260,6 +264,36 @@ function getColors() {
             id: 12,
             value: '#73A857'
         }
+    ];
+}
+
+function getQuotes() {
+    return [
+        {
+            "text": "Скалолазание - моя свобода. Моя жизнь в вертикальном мире ",
+            "author": "Линн Хилл"
+        },
+        {
+            "text": "Мозг- самая важная мышца в скалолазании",
+            "author": "Вольфганг Гюллих"
+        },
+        {
+            "text": "Я никогда не тренируюсь на самом деле. Я просто всегда был скалолазом",
+            "author": "Крис Шарма"
+        },
+        {
+            "text": "Никогда я не исследовал жизнь так интенсивно в ее красоте, как когда я свободно висел на кончиках двух пальцев над глубокой впадиной",
+            "author": "Вольфганг Гюллих"
+        },
+        {
+            "text": "Есть два типа альпинистов: те, кто поднимается, потому что их сердце поет, когда они в горах, и все остальные",
+            "author": "Алекс Лоу"
+        },
+        {
+            "text": "Горы - это не стадионы, на которых я удовлетворяю свои амбиции, это соборы, где я исповедую свою религию",
+            "author": "Анатолий Букреев"
+        },
+
     ];
 }
 
