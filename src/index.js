@@ -52,6 +52,10 @@ app.get('/quotes', (request, response) => {
     response.render('quotes');
 });
 
+app.get('/markdown-previewer', (request, response) => {
+    response.render('markdown-previewer');
+});
+
 app.get('/registration', (request, response) => {
     response.render('registration');
 });
