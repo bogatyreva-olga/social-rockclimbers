@@ -45,3 +45,16 @@
     box-shadow: 1px 1px 10px 2px #3a5f5f;
     border-top: none;
 }
+
+.preview-wrap {
+    overflow-wrap: break-word;
+    background-color: #c0d8d8;
+    border: 1px solid #1d2f2f;
+    box-shadow: 1px 1px 10px 2px #3a5f5f;
+    border-top: none;
+    min-height: 200px;
+}
+
+#preview {
+    padding: 0 1rem;
+}
