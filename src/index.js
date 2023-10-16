@@ -1,4 +1,3 @@
-// index.js
 console.log("start server");
 const fs = require('fs');
 const path = require('path');
