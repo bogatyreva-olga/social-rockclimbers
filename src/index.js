@@ -88,6 +88,10 @@ app.get('/random-quotes', (request, response) => {
     response.json(quotes[randomIndexQuote]);
 });
 
+app.post("/markdown-render", (request, response) => {
+    response.json(request.body)
+})
+
 const minPasswordLength = 6;
 app.post('/registration',
     body('email').isEmail().withMessage("Invalid email").normalizeEmail(),
