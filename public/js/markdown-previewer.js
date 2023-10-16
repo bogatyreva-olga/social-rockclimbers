@@ -9,6 +9,10 @@ function showTextFromTextareaInBlockBelow() {
         preview.empty();
         preview.append(result);
     });
+    $.ajax({
+        type: "POST",
+        url: "/markdown-render",
+    });
 }
 
 $(document).ready(() => {

@@ -1,4 +1,6 @@
 console.log("start server");
+let MarkdownIt = require('markdown-it'),
+    md = new MarkdownIt();
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
