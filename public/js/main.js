@@ -17,7 +17,7 @@ function sendRegistrationForm() {
     let messageElements = $(".message-js");
     $(messageElements).each(function (i, elem) {
         $(elem).text('');
-    })
+    });
 
     $.ajax({
         url: '/registration',
@@ -93,7 +93,7 @@ function sendFeedbackMessage() {
             $("#name-user").val('');
             $('#feedback-message').val('');
         }
-    })
+    });
 
     return undefined;
 }
@@ -140,11 +140,11 @@ function updateFeedbackMessagesWithCategoryFilter() {
             feedbackMessagesElement.html('');
 
             for (let i = 0; i < feedbackMessagesData.length; i++) {
-                let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i])
+                let feedbackMessageElement = getNodeFromFeedbackMessage(feedbackMessagesData[i]);
                 feedbackMessagesElement.append(feedbackMessageElement);
             }
         }
-    })
+    });
 
     return undefined;
 }
@@ -154,7 +154,7 @@ let feedbackCategories = [];
 function updateFeedbackCategories() {
     $.get("/feedback/categories", function (response) {
         feedbackCategories = response.categories;
-    })
+    });
 }
 
 function getCategoryNameById(categoryId) {

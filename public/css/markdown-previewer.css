@@ -1,0 +1,60 @@
+.editor-wrap {
+    max-width: 600px;
+    margin: 1.125rem auto;
+}
+
+.toolbar i {
+    width: 25px;
+    margin-left: 5px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    background-color: #4aa3a3;
+    padding: 0.3rem;
+    border: 1px solid #1d2f2f;
+    box-shadow: 1px 1px 10px 2px #3a5f5f;
+    font-size: 1rem;
+    color: black;
+}
+
+.toolbar .fa-arrows-alt, .toolbar .fa-compress {
+    margin-left: auto;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+}
+
+.editor-wrap textarea {
+    width: 100%;
+    min-height: 200px;
+    margin-bottom: -5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-size: 0.875rem;
+}
+
+.colorScheme, .preview-wrap, .editor-wrap textarea {
+    background-color: #c0d8d8;
+    border: 1px solid #1d2f2f;
+    box-shadow: 1px 1px 10px 2px #3a5f5f;
+    border-top: none;
+}
+
+.preview-wrap {
+    overflow-wrap: break-word;
+    background-color: #c0d8d8;
+    border: 1px solid #1d2f2f;
+    box-shadow: 1px 1px 10px 2px #3a5f5f;
+    border-top: none;
+    min-height: 200px;
+}
+
+#preview {
+    padding: 0 1rem;
+}
