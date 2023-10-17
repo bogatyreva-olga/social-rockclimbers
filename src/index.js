@@ -91,8 +91,12 @@ app.get('/random-quotes', (request, response) => {
 });
 
 app.post("/markdown-render", (request, response) => {
-    response.json(request.body)
-})
+    let mdText = request.body.md;
+    let result = md.render(mdText);
+    response.json({
+        html: result
+    });
+});
 
 const minPasswordLength = 6;
 app.post('/registration',
