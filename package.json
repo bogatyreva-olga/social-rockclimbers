@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.3.4",
     "express-validator": "^6.13.0",
-    "marked": "^9.1.2",
+    "markdown-it": "^13.0.2",
     "md5": "^2.3.0"
   }
 }

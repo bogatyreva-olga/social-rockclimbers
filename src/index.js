@@ -1,5 +1,6 @@
-// index.js
 console.log("start server");
+let MarkdownIt = require('markdown-it'),
+    md = new MarkdownIt();
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -87,6 +88,14 @@ app.get('/random-quotes', (request, response) => {
     }
     let randomIndexQuote = Math.floor(Math.random() * quotes.length);
     response.json(quotes[randomIndexQuote]);
+});
+
+app.post("/markdown-render", (request, response) => {
+    let mdText = request.body.md;
+    let result = md.render(mdText);
+    response.json({
+        html: result
+    });
 });
 
 const minPasswordLength = 6;

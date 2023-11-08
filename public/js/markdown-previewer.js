@@ -4,10 +4,10 @@ function showTextFromTextareaInBlockBelow() {
     let editor = $('#editor');
     let preview = $('#preview');
     editor.on("input", () => {
-        let editorValue = $('#editor').val();
-        let result = md.render(editorValue);
-        preview.empty();
-        preview.append(result);
+        $.post('/markdown-render', {md: editor.val()}, function (data) {
+            preview.empty();
+            preview.append(data.html);
+        });
     });
 }
 
